@@ -1,0 +1,15 @@
+---
+- name: Install Git on CentOS
+  hosts: webserver
+  become: yes
+  become_user: saliu40
+
+    #vars:
+    #ansible_ssh_pass: Abdulll40
+
+  tasks:
+    - name: Install Git
+      package:
+        name: git
+        state: present
+

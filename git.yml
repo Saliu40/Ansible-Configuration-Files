@@ -1,0 +1,11 @@
+---
+- name: Install Git on CentOS node
+  hosts: centos_nodes
+  become: yes
+
+  tasks:
+    - name: Ensure Git is installed
+      yum:
+        name: git
+        state: present
+

@@ -1,0 +1,11 @@
+---
+- name: Copy a file to a remote machine
+  hosts: webserver
+    #become: true  # If sudo privileges are required
+
+  tasks:
+    - name: Copy file to remote machine
+      copy:
+        src: /home/saliu21/sample/mine  # Local file path
+        dest: /home/saliu40  # Remote destination path
+

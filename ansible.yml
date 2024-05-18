@@ -1,0 +1,10 @@
+---
+- name: Installing Ansible on my centos node
+  hosts: centos_nodes
+  become: yes
+
+  tasks:
+    - name: Installing Ansible
+      yum:
+        name: ansible
+        state: present

@@ -1,0 +1,10 @@
+---
+ - hosts: webserver
+   vars:
+     salutations: Hello Everyone!
+
+   tasks:
+   - name: Ansible Basic Variable Usages
+     debug:
+       msg: "{{salutations}}"
+...

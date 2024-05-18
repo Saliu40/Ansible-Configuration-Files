@@ -1,0 +1,23 @@
+---
+- name: Install Nginx on CentOS
+  hosts: webserver
+  become: yes
+
+  tasks:
+    - name: Update the package repository cache
+      yum:
+        name: '*'
+        state: latest
+      become: yes
+
+    - name: Install Nginx package
+      yum:
+        name: nginx
+        state: present
+
+    - name: Start Nginx service
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+

@@ -1,0 +1,21 @@
+[debian]
+172.20.20.101
+172.20.20.102
+172.20.20.103
+172.20.20.105
+
+
+[AWS]
+52.90.255.206
+
+[centos_nodes]
+centos_node ansible_host=192.168.43.105  # Replace with the correct IP or hostname
+
+[centos_nodes:vars]
+ansible_user=saliu40
+ansible_ssh_private_key_file=/home/saliu21/saliu_key
+ansible_become=true
+ansible_become_method=sudo
+ansible_become_user=root
+
+

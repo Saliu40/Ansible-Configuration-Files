@@ -1,0 +1,16 @@
+---
+- name: Remove Ansible from CentOS node
+  hosts: centos_nodes
+  become: yes
+
+  tasks:
+    - name: Remove Ansible
+      yum:
+        name: ansible
+        state: absent
+
+    - name: Remove Ansible core
+      yum:
+        name: ansible-core
+        state: absent
+
