@@ -1,0 +1,21 @@
+---
+- name: Install Maven on Ubuntu
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure apt cache is updated
+      apt:
+        update_cache: yes
+
+    - name: Install Maven
+      apt:
+        name: maven
+        state: present
+
+    - name: Verify Maven installation
+      command: mvn -version
+      register: maven_version_output
+
+    - name: Display Maven version
+      debug:
+        msg: "{{ maven_version_output.stdout }}"

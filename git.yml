@@ -1,11 +1,10 @@
 ---
-- name: Install Git on CentOS node
+- name: Installing git on my centos node
   hosts: centos_nodes
   become: yes
 
   tasks:
-    - name: Ensure Git is installed
+    - name: Installing git
       yum:
         name: git
         state: present
-

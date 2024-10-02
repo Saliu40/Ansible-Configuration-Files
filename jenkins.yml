@@ -1,0 +1,69 @@
+- name: Install Jenkins on CentOS
+  hosts: centos_nodes
+  become: yes
+  tasks:
+    - name: Ensure yum cache is updated
+      yum:
+        name: '*'
+        state: latest
+
+    - name: Install Java
+      yum:
+        name: java-11-openjdk
+        state: present
+
+    - name: Clean Yum cache
+      command: yum clean all
+
+    - name: Download Jenkins GPG key
+      get_url:
+        url: https://pkg.jenkins.io/redhat/jenkins.io.key
+        dest: /etc/pki/rpm-gpg/RPM-GPG-KEY-jenkins
+
+    - name: Import Jenkins GPG key
+      rpm_key:
+        state: present
+        key: /etc/pki/rpm-gpg/RPM-GPG-KEY-jenkins
+
+    - name: Add Jenkins repository
+      yum_repository:
+        name: Jenkins
+        description: Jenkins Repository
+        baseurl: http://pkg.jenkins.io/redhat-stable/
+        gpgcheck: yes
+        gpgkey: file:///etc/pki/rpm-gpg/RPM-GPG-KEY-jenkins
+        enabled: yes
+
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+      register: jenkins_install
+      failed_when: jenkins_install.failed
+      ignore_errors: yes
+
+    - name: Debug installation failure
+      debug:
+        var: jenkins_install
+
+    - name: Start and enable Jenkins service
+      systemd:
+        name: jenkins
+        state: started
+        enabled: yes
+      when: jenkins_install.changed
+
+    - name: Allow Jenkins through the firewall
+      firewalld:
+        port: 8080/tcp
+        permanent: yes
+        state: enabled
+      notify:
+        - reload firewalld
+      when: jenkins_install.changed
+
+  handlers:
+    - name: reload firewalld
+      firewalld:
+        state: reloaded
+

@@ -4,9 +4,10 @@
 172.20.20.103
 172.20.20.105
 
-
+[vagrant]
+192.168.33.10
 [AWS]
-52.90.255.206
+3.91.94.81
 
 [centos_nodes]
 centos_node ansible_host=192.168.43.105  # Replace with the correct IP or hostname
